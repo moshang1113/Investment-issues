@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int m = 5;
+const int maxn = 6;
+int dp[m][maxn] = { 0 };
+int f[m][maxn] = { 0,0,0,0,0,0,
+				   0,11,12,13,14,15,
+				   0,0,5,10,15,20,
+				   0,2,10,30,32,40,
+				   0,20,21,22,23,24 };
+void invest(int n, int money)
+{
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 0; j <= money; j++)
+		{
+			dp[i][j] = 0;
+			for (int k = 0; k <= j; k++)
+			{
+				//利用动态规划对之前的投资进行最小更新 
+				if (dp[i][j] < f[i][k] + dp[i - 1][j - k])
+					dp[i][j] = f[i][k] + dp[i - 1][j - k];
+			}
+		}
+	}
+	cout<<dp[n][money];
+}
+
+int main(int argc, char** argv)
+{
+	invest(4, 5);
+	return 0;
+}
